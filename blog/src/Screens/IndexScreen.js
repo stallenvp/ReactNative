@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,17 @@ import { Context } from '../context/blogContext';
 import { Feather } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation }) => {
-  const { state, removeBlogPost } = useContext(Context);
+  const { state, removeBlogPost, getBlogPosts } = useContext(Context);
+
+  useEffect(() => {
+    getBlogPosts();
+  }, []);
 
   return (
     <View>
       <FlatList
         data={state}
-        keyExtractor={blogPost => blogPost.title}
+        keyExtractor={(blogPost) => blogPost.title}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
